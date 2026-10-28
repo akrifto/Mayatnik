@@ -1,0 +1,81 @@
+<!doctype html> <!-- Тип документа --> 
+<html lang="ru"> <!-- Язык -->
+
+<!-- Настройки документа -->  
+<head> 
+    <meta charset="UTF-8" />
+    <!-- Чтобы все было по ширине -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mayatnik</title>
+    <!-- 
+    Настройка экрана (Ну или как оно там называется)
+    
+    margin: 0; padding: 0; Удаление полей
+    box-sizing: border-box; Не дает элементам уйти в out of bounce
+    -->
+<style>
+      * {
+        margin: 0;  
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body, html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: black; 
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vw;
+      }
+
+      /* Глобальный киберпанк-скроллбар для всех панелей */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #aaaaaa50;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #aaaaaaaa;
+      }
+
+      /* Телеграм-стиль для всех слайдеров */
+      .slider-stile {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        outline: none;
+      }
+      .slider-stile::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ffffff;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        transition: transform 0.1s ease;
+      }
+      .slider-stile::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+      /* === ДОБАВЛЯЕМ ЭТОТ КУСОК ДЛЯ УБИЙСТВА СТРЕЛОК В INPUT[NUMBER] === */
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+
+    </style><body>
+  <script type="module" src="src/main.ts"></script>
+</body>
+</html>
