@@ -10,11 +10,19 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import type { BrushFXConfig } from '../types';
-
+/**
+* Менеджер пост-обработки
+* Управляет конвейером эффектов и настройками свечения
+*/
 export class PostProcessing {
     private composer: EffectComposer;
     private bloomPass: UnrealBloomPass;
-
+    /**
+     * 
+     * @param renderer 
+     * @param scene 
+     * @param camera 
+     */
     constructor(
         renderer: THREE.WebGLRenderer,
         scene: THREE.Scene,
@@ -57,8 +65,11 @@ export class PostProcessing {
     }
 
     /**
-     * Обновляет параметры свечения и экспозиции исходя из BrushFXConfig в типах
-     */
+    * Обновляет параметры эффектов из конфига.
+    * Если свечение 0, отключает (Ну а зачем он)
+    * @param config Настройки кисти и эффектов.
+    * @param renderer WebGL-рендерер (для настройки ToneMappingExposure).
+    */
     public updateFX(config: BrushFXConfig, renderer: THREE.WebGLRenderer): void {
         this.bloomPass.strength = config.glowIntensity;
         this.bloomPass.enabled = config.glowIntensity > 0;

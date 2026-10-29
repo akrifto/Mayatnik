@@ -21,21 +21,21 @@ export class Visualizer {
     private postProcessing: PostProcessing;
     private trailRenderer: TrailRenderer;
 
-
+    /**
+     * Инициализирует все подсистемы 
+     * Настраивает защиту от потери WebGL-контекста и очистку при HMR
+     * @param container Сюда вставляется холст
+     */
     constructor(container: HTMLElement) {
         this.container = container;
         this.scene = new THREE.Scene();
 
-        /** 
-         * Очистка перед запуском
-         * Очень важно, а то даже F5 не поможет
-        */
+         // Очистка перед запуском
+         // Очень важно, а то даже F5 не поможет
         this.container.innerHTML = '';
 
-        /**
-         * Настраиваем WebGL рендерер с защитой производительности
-         * !Возможно доработать
-         */
+         // Настраиваем WebGL рендерер с защитой производительности
+         // !Возможно доработать
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -91,7 +91,15 @@ export class Visualizer {
             });
         }
     }
-
+    /**
+    * Главный метод рендера, вызываемый каждый кадр.
+    * Обновляет каркас маятника, шлейфы и применяет пост-процессинг.
+    * @param pendulumResults Координаты суставов для отрисовки скелета.
+    * @param trails Массивы точек для отрисовки следов.
+    * @param simConfig Настройки симуляции (цвет фона и т.д.).
+    * @param brushConfig Настройки кисти (цвета, толщина, прозрачность).
+    * @param time Время симуляции (для анимации Flow).
+    */
     public render(
         pendulumResults: any[],
         trails: JointData[][],

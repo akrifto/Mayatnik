@@ -10,7 +10,11 @@
 import * as THREE from 'three';
 import type { PendulumResult, BrushFXConfig } from '../types';
 import { GradientMap } from '../Brush/GradientMap';
-
+/**
+ * Фабрика мешей для отрисовки скелета маятника.
+ * Создает цилиндры (звенья) и сферы (суставы).
+ * !сейчас пересоздает геометрию каждый кадр (переделать на настоящий Object Pool).
+ */
 export class MeshPool {
     private scene: THREE.Scene;
     private group: THREE.Group;
@@ -23,9 +27,11 @@ export class MeshPool {
     }
 
     /**
-     * Обновляет геометрию суставов и связанных рычагов маятника
-     * *Потом сделаем чтоб оно просто меняло координаты, а не рисовало все мильен раз в секунду
-     */
+    * Обновляет скелет маятника: удаляет старые меши и создает новые.
+    * @param pendulumResults Массив результатов физики (суставы и кончик).
+    * @param brushConfig Настройки кисти (для цвета суставов).
+    * @param time Время симуляции.
+    */
     public update(pendulumResults: PendulumResult[], brushConfig?: BrushFXConfig, time: number = 0): void {
         // Очищаем старые элементы скелета
         while (this.group.children.length > 0) {

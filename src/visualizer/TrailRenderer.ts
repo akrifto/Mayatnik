@@ -11,6 +11,10 @@ import { GradientMap } from '../Brush/GradientMap';
 import { OpacityMap } from '../Brush/OpacityMap';
 import { WidthMap } from '../Brush/WidthMap'; // Подключаем реальную карту толщины!
 
+/**
+ * Рендер следа
+ * Генерирует объемные трубы вручную через BufferGeometry для производительности (хоть какой-то)
+ */
 export class TrailRenderer {
     private trailMeshes: THREE.Mesh[] = []; // * Эта штука нужна для подддержки зеркал (вопрос о том, когда я их сделаю, остается открытым)
     private scene: THREE.Scene;
@@ -20,6 +24,13 @@ export class TrailRenderer {
         this.scene = scene;
     }
 
+    /**
+    * Обновляет геометрию всех шлейфов на основе новых точек.
+    * Пересчитывает вершины и её параметры для каждого кадра.
+    * @param trails Массив массивов точек (для поддержки зеркал).
+    * @param brushConfig Настройки кисти (градиент, прозрачность, толщина).
+    * @param time Время симуляции для анимации карт.
+    */
     public update(trails: JointData[][], brushConfig: BrushFXConfig, time: number): void {
         while (this.trailMeshes.length < trails.length) {
             const geometry = new THREE.BufferGeometry();
