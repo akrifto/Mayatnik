@@ -29,9 +29,8 @@ document.body.appendChild(appContainer);
 document.body.style.margin = '0';   
 document.body.style.overflow = 'hidden';
 
-/**
- * Настройки симуляции по умолчанию
- */
+
+ //Настройки симуляции по умолчанию
 const simConfig: SimulationConfig = {
     linkCount: 3, 
     links: [
@@ -95,12 +94,24 @@ let isRunning = true;
  * в след раз прсто качаю реакт или еще что-то
  */
 new HUD(simConfig, brushConfig, {
+
+    /**
+     * Старт/Пауза 
+     */
     onPlayToggle: (playing) => {
         isRunning = playing;
     },
+    /**
+     * Очистить
+     */
     onClear: () => {
         trailBuffers.forEach(buf => buf.clear());
     },
+
+    /**
+     * Перезагрузка до заводских настроек
+     * !НЕ РЕАЛИЗОВАНО
+     */
     onReset: () => {
         trailBuffers.forEach(buf => buf.clear());
         simConfig.linkCount = 3;
@@ -111,9 +122,15 @@ new HUD(simConfig, brushConfig, {
             { length: 5.0, speed2D: 1.0, speed3D: 0.0, phase: Math.PI / 2 }
         ];
     },
+
+    /**
+     * Проверка на 3D
+     */
     onModeToggle: (is3D) => {
         simConfig.is3D = is3D;
     },
+
+    
     onBgColorChange: (color) => {
         simConfig.backgroundColor = color;
     },
@@ -122,15 +139,16 @@ new HUD(simConfig, brushConfig, {
     }
 });
 
-/** 
- * Цикл анимации
- * Буквально двигатель всего и вся 
- */
 
 // Объявляем переменную для расчёта дельты времени кадра
 let lastTime = performance.now();
 let simulationTime = 0; // Накопитель симуляционного времени
-
+ 
+/**
+ * Цикл анимации
+ * Буквально двигатель всего и вся
+ * @param currentTime Системное время, передаваемое requestAnimationFrame
+ */
 function animate(currentTime: number) {
     requestAnimationFrame(animate);
 
