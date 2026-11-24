@@ -1,4 +1,4 @@
-// src/visualizer/Visualizer.ts
+// src\visualizer\Visualizer.ts
 
 /** 
  * Сборочный цех всего того, что наклепалось 

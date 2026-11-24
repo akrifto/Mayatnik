@@ -1,75 +1,82 @@
 // src/types/index.ts
 
 /**
- * Просто набор типов
- * Возможно, можно было и добавить больше, но как есть
+ * Контракты данных и коллбэков между движком
  */
 
-// Зеркала
 export type MirrorMode2D = {
-    x: boolean;
-    y: boolean;
+  x: boolean;
+  y: boolean;
 };
+
 export type MirrorMode3D = {
-    x: boolean;
-    y: boolean;
-    z: boolean;
+  x: boolean;
+  y: boolean;
+  z: boolean;
 };
 
-// Конфигурация одного звена маятника
+/** Параметры одного звена кинематической цепи */
 export interface LinkConfig {
-    length: number;       // Длина
-    speed2D: number;      // Скорость вращения по вертикали
-    speed3D?: number;     // Скорость вращения по горизонтали
-    phase: number;        // Вроде и не нужен, но тогда оно будет крутится синхронно
+  length: number;
+  speed2D: number;
+  speed3D?: number;
+  phase: number;
 }
 
-// Общая конфигурация симуляции и маятника
+/** Общая конфигурация симуляции маятника */
 export interface SimulationConfig {
-    linkCount: number;          // Количество звеньев 
-    links: LinkConfig[];        // Массив параметров звеньев
-    is3D: boolean;              // Режим 2D или 3D
-    speed: number;              // Общая скорость симуляции
-    backgroundColor: string;    // Цвет фона (потом сделаю чтоб можно было его менять)
-    mirror2D: MirrorMode2D;     // 2D зеркалирование
-    mirror3D: MirrorMode3D;     // 3D зеркалирование
-} // Судя по текущему результату, начинаю задумываться "а надо ли вообще это зеркалирование?"
+  linkCount: number;
+  links: LinkConfig[];
+  is3D: boolean;
+  speed: number;
+  backgroundColor: string;
+  mirror2D: MirrorMode2D;
+  mirror3D: MirrorMode3D;
+}
 
-// Контрольная точка для карт (градиент, прозрачность, толщина)
+/** Контрольная точка карты кисти */
 export interface MapControlPoint {
-    position: number;   // Позиция на шкале (от 0 до 1)
-    value: number | string; // Значение (цвет для градиента, а для прозрачности и толщины число)
+  position: number;
+  value: number | string;
 }
-// Параметры для каждой из трех карт кисти (Градиент, Прозрачность, Толщина)
+
+/** Настройки отдельной карты кисти */
 export interface BrushMapParams {
-    points: MapControlPoint[]; // Массив контрольных точек
-    density: number;           // Частота или масштаб (тут я хз как правильно назвать)
-    flow: number;              // Скорость 
+  points: MapControlPoint[];
+  density: number;
+  flow: number;
 }
 
-
-// Общие настройки кисти и "красивостей"
+/** Общая конфигурация кисти и пост-обработки */
 export interface BrushFXConfig {
-    gradientMap: BrushMapParams;
-    opacityMap: BrushMapParams;
-    widthMap: BrushMapParams;
-    exposure: number;          // HDR / Экспозиция
-    glowIntensity: number;     // Интенсивность неонового свечения (0 - макс)
-    lineLengthMax: number;     // Максимальная длина линии (или бесконечность)
+  gradientMap: BrushMapParams;
+  opacityMap: BrushMapParams;
+  widthMap: BrushMapParams;
+  exposure: number;
+  glowIntensity: number;
+  lineLengthMax: number;
 }
 
-/**
- * Результат расчёта физики для рендерера
- * distance добавлен позже, потому что градиенты плыли
- */
+/** Точка траектории / сустава для рендера */
 export interface JointData {
-    x: number;
-    y: number;
-    z?: number; 
-    distance?: number; 
+  x: number;
+  y: number;
+  z?: number;
+  distance?: number;
 }
 
+/** Результат расчёта кинематики за кадр */
 export interface PendulumResult {
-    joints: JointData[];
-    tip: { x: number; y: number; z?: number };
+  joints: JointData[];
+  tip: { x: number; y: number; z?: number };
+}
+
+/** Коллбэки, которыми React-интерфейс управляет внешним движком */
+export interface EngineCallbacks {
+  onPlayToggle: (isPlaying: boolean) => void;
+  onClear: () => void;
+  onReset: () => void;
+  onModeToggle: (is3D: boolean) => void;
+  onBgColorChange: (color: string) => void;
+  onConfigChange: () => void;
 }

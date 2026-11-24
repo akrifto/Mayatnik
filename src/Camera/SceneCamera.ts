@@ -35,6 +35,7 @@ export class SceneCamera {
         this.controls.enableDamping = true; // Плавность при вращении
         this.controls.dampingFactor = 0.05; // Плавность
         this.controls.enableZoom = true;
+        this.controls.enablePan = false
         
 
         // Лимиты зума

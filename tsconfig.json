@@ -1,24 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es2023",
-    "module": "esnext",
-    "lib": ["ES2023", "DOM"],
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
     "types": ["vite/client"],
-    "allowArbitraryExtensions": true,
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": ["src"]
+  "exclude": ["dist"]
 }

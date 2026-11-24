@@ -1,4 +1,4 @@
-// src\ui\components\MeshPool.ts
+// src\visualizer\MeshPool.ts
 
 /**
  * ВАЖНО: Это не совсем пул, скорее фабрика мешей. 
